@@ -1,0 +1,71 @@
+<!doctype html>
+<html ng-app="FormApp">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="form.css">
+    <script src="form.js"></script>
+</head>
+
+<body>
+    <div class="container" ng-controller="FormController">
+        <h2>Formulário de crédito</h2>
+        <form name="user">
+            <div class="form-group">
+                <label for="inputName">Nome</label>
+                <input type="text" name="name" class="form-control" id="inputName" placeholder="Preencha seu nome"
+                    ng-model="form.name" required>
+                <small id="emailHelp" class="form-text text-muted"></small>
+                <div class="alert alert-danger" ng-show="user.name.$error.required && user.name.$touched" role="alert">
+                    O preenchimento do nome é obrigatório.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputCreditLimit">Limite de crédito</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">R$</span>
+                    </div>
+                    <input type="number" name="limit" min="0.00" step=".01" pattern="^\d*(\.\d{0,2})?$"
+                        class="form-control" id="inputCreditLimit" placeholder="Preencha o limite desejado"
+                        ng-model="form.creditLimit" required>
+                </div>
+                <div class="alert alert-danger" ng-show="user.limit.$error.required && user.limit.$touched"
+                    role="alert">
+                    O preenchimento do limite é obrigatório.
+                </div>
+            </div>
+            <div class="form-group">
+                <p>Risco</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRiskRadio" id="inlineRadio1"
+                        ng-model="form.risk" value="A">
+                    <label class="form-check-label" for="inlineRadio1">A</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRiskRadio" id="inlineRadio2"
+                        ng-model="form.risk" value="B">
+                    <label class="form-check-label" for="inlineRadio2">B</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRiskRadio" id="inlineRadio3"
+                        ng-model="form.risk" value="C">
+                    <label class="form-check-label" for="inlineRadio3">C</label>
+                </div>
+            </div>
+
+            <div class="alert alert-success" ng-show="successWhenSendingFormData" role="alert">
+                Dados de usuário foram enviados!
+            </div>
+            <div class="alert alert-danger" ng-show="errorWhenSendingFormData" role="alert">
+                {{ errorMsgFromServer }}
+            </div>
+            <button type="submit" ng-click="sendFormData(form)" ng-disabled="user.$error.required"
+                class="btn btn-primary btn-lg">Enviar</button>
+        </form>
+    </div>
+</body>
+
+</html>
